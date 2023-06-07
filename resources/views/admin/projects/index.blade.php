@@ -21,7 +21,15 @@
                 <tr>
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
-                    <td>{{ $project->type?->name }}</td>
+                    @if ($project->type)
+                        <td>
+                            <span>{{ $project->type->name }}</span>
+                        </td>
+                    @else
+                        <td>
+                            <span>Nessuna</span>
+                        </td>
+                    @endif
                     <td>{{ $project->slug }}</td>
                     <td>
                         <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-success">
