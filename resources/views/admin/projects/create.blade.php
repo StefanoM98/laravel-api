@@ -20,6 +20,15 @@
             <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
         </div>
         <div class="mb-3">
+            <label for="type">Seleziona il tipo</label>
+            <select class="form-select" id="type" name="type_id">
+                <option selected value=""></option>
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}" @selected(old('type_id') == $type->id)>{{ $type->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
             <textarea class="form-control" id="description" rows="3" name="description">{{ old('description') }}</textarea>
         </div>

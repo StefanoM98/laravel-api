@@ -26,7 +26,8 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'title' => ['required', Rule::unique('projects')],
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'type_id' => ['nullable', 'exists:types,id']
         ];
     }
 }
