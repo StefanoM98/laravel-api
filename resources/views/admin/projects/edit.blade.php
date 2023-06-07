@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2>modifica progetto {{ $project->title }}</h2>
+    <h2>Modifica progetto: {{ $project->title }}</h2>
     <a class="btn btn-primary mt-4" href="{{ route('admin.dashboard') }}">Torna alla dashboard</a>
 
     @if ($errors->any())
@@ -13,7 +13,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('admin.projects.update'), $project->slug }}" method="POST">
+    <form action="{{ route('admin.projects.update', $project->slug) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3">
