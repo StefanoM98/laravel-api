@@ -1,7 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>La lista dei miei progetti</h1>
+    <h1>
+        La lista dei miei progetti</h1>
     <table class="table">
         <a class="btn btn-primary m-4" href="{{ route('admin.dashboard') }}">Vai alla tua dashboard</a>
         <a href="{{ route('admin.projects.create') }}" class="btn btn-primary m-4">
@@ -12,7 +13,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Tipo</th>
-                <th scope="col">Tecnologia</th>
+                <th scope="col">Tecnologie</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Action</th>
             </tr>
@@ -23,7 +24,13 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->title }}</td>
                     <td>{{ $project->type?->name }}</td>
-                    <td>{{ $project->$technology?->name }}</td>
+                    <td>
+                        @forelse ($project->technologies as $tec)
+                            <span>{{ $tec->name }}</span>
+                        @empty
+                            <span>Niente</span>
+                        @endforelse
+                    </td>
                     <td>{{ $project->slug }}</td>
                     <td>
                         <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-success">

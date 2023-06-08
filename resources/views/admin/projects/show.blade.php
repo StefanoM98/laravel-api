@@ -8,5 +8,14 @@
     @else
         <p class="text-center">Non è impostata nessuna categoria</p>
     @endif
+
+    <div class="mt-3">
+        <h4>Tecnologie</h4>
+        @forelse ($project->technologies as $tec)
+            <span>{{ $tec->name }}</span>
+        @empty
+            <span>Niente</span>
+        @endforelse
+    </div>
     <p class="text-center">{{ $project->description }}</p>
 @endsection
