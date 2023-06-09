@@ -28,17 +28,18 @@
                 @endforeach
             </select>
         </div>
-        {{-- <div class="mb-3">
-            <label for="techno">Seleziona la tecnologia</label>
-            <select class="form-select" id="techno" name="technology_id">
-                <option selected value=""></option>
-                @forelse ($project->technologies as $tec)
-                    <span>{{ $tec->name }}</span>
-                @empty
-                    <span>Niente</span>
-                @endforelse
-            </select>
-        </div> --}}
+        <div class="mb-3">
+            <h4>Selezione le tecnologia usate</h4>
+            @foreach ($tecno as $item)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tecno[]" value="{{ $item->id }}"
+                        id="tecno-{{ $item->id }}" @checked(in_array($item->id, old('tecno', [])))>
+                    <label class="form-check-label" for="tecno-{{ $item->id }}">
+                        {{ $item->name }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
         <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
             <textarea class="form-control" id="description" rows="3" name="description">{{ old('description') }}</textarea>

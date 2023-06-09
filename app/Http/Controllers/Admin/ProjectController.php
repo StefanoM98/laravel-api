@@ -32,7 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $tecno = Technology::all();
+        return view('admin.projects.create', compact('types', 'tecno'));
     }
 
     /**
@@ -48,7 +49,9 @@ class ProjectController extends Controller
         $project = new Project();
         $project->fill($data);
         $project->save();
-
+        if ($request->has('tecno')) {
+            $project->technologies()->attach($request->tecno);
+        }
         return redirect()->route('admin.projects.index');
     }
 
@@ -72,7 +75,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $tecno = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'tecno'));
     }
 
     /**
@@ -87,6 +91,11 @@ class ProjectController extends Controller
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
         $project->update($data);
+        if ($request->has('tecno')) {
+            $project->technologies()->sync($request->tecno);
+        } else {
+            $project->technologies()->detach();
+        }
         return redirect()->route('admin.projects.index');
     }
 
@@ -98,6 +107,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project->technologies()->detach();
         $project->delete();
 
         return redirect()->route('admin.projects.index');
