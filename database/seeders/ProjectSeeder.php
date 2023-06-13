@@ -21,6 +21,7 @@ class ProjectSeeder extends Seeder
             $newProject = new Project();
             $newProject->title = $faker->sentence(4);
             $newProject->slug = Str::slug($newProject->title, '%');
+            $newProject->image = $faker->imageUrl(600, 300, 'Project', false, false);
             $newProject->description = $faker->text();
             $newProject->save();
         }

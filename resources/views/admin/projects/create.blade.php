@@ -13,7 +13,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('admin.projects.store') }}" method="POST">
+    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
@@ -27,6 +27,10 @@
                     <option value="{{ $type->id }}" @selected(old('type_id') == $type->id)>{{ $type->name }}</option>
                 @endforeach
             </select>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" class="form-control" id="image" name="image">
         </div>
         <div class="mb-3">
             <h4>Selezione le tecnologia usate</h4>
