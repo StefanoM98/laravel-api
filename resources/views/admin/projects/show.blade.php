@@ -5,7 +5,7 @@
     <h1 class="text-center">{{ $project->title }}</h1>
     <div class="my-3">
         @if ($project->image)
-            <img src="{{ str_contains($project->image, 'https://') ? $project->image : assett('storage/' . $project->image) }}"
+            <img src="{{ str_contains($project->image, 'https://') ? $project->image : asset('storage/' . $project->image) }}"
                 alt="{{ $project->title }}">
         @else
             <div class="w-25 p-5 bg-secondary">

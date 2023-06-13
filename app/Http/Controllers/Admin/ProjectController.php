@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -46,9 +47,11 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
-        $project = new Project();
-        $project->fill($data);
-        $project->save();
+        if ($request->hasFile('image')) {
+            $path = Storage::disk('public')->put('post_img', $request->image);
+            $data['image'] = $path;
+        }
+        $project = Project::create($data);
         if ($request->has('tecno')) {
             $project->technologies()->attach($request->tecno);
         }
@@ -90,6 +93,13 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
+        if ($request->hasFile('image')) {
+            if ($project->image) {
+                Storage::delete($project->image);
+            }
+            $path = Storage::disk('public')->put('post_img', $request->image);
+            $data['image'] = $path;
+        }
         $project->update($data);
         if ($request->has('tecno')) {
             $project->technologies()->sync($request->tecno);
@@ -108,6 +118,9 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->technologies()->detach();
+        if ($project->image) {
+            Storage::delete($project->image);
+        }
         $project->delete();
 
         return redirect()->route('admin.projects.index');

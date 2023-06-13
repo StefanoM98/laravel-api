@@ -47,6 +47,15 @@
             <label for="description" class="form-label">Descrizione</label>
             <textarea class="form-control" id="description" rows="3" name="description">{{ old('description', $project->description) }}</textarea>
         </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Immagine</label>
+            <input type="file" class="form-control" id="image" name="image">
+            @if ($project->image)
+                <div class="my-3">
+                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
+                </div>
+            @endif
+        </div>
         <button type="submit" class="btn btn-success">Invia la modifica del progetto</button>
     </form>
 @endsection
