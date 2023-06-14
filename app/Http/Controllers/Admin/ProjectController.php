@@ -94,6 +94,7 @@ class ProjectController extends Controller
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
         if ($request->hasFile('image')) {
+
             if ($project->image) {
                 Storage::delete($project->image);
             }
